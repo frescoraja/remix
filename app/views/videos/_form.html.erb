@@ -101,7 +101,7 @@
 
       function removeTagValue(tagName) {
         var currentTags = JSON.parse($("#video_tags").val());
-        currentTags.splice(currentTags.indexOf(tagName, 1));
+        currentTags.splice(currentTags.indexOf(tagName), 1);
         $("#video_tags").val(JSON.stringify(currentTags));
       }
   });
