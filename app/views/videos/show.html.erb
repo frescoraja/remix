@@ -1,0 +1,20 @@
+<div class="wrapper">
+  <h2><%= @video.title %></h2>
+  <h4><%= @video.description %></h4>
+  <%= video_tag @video.media_url, controls: true %>
+  <span>
+    <div class="tags">
+      <% @video.tags.each do |tag| %>
+        <span class="tag-item"><i class="fa fa-tags"></i> <%= tag %></span>
+      <% end %>
+    </div>
+    <h3><i class="fa fa-pencil-square"></i>
+      <%= link_to "Edit Video", edit_video_url(@video) %>
+    </h3>
+  </span>
+</div>
+<footer>
+  <a href="/videos">
+  <i class="fa fa-chevron-circle-left"></i>
+  Videos Index</a>
+</footer>

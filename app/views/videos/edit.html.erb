@@ -1,0 +1,9 @@
+<div class="wrapper">
+  Edit Video
+  <br>
+  <div class="video"><%= video_tag @video.media_url, controls: true, id:"video-container" %></div>
+  <div class="videoform"><%= render "form", video: @video %></div>
+</div>
+<footer>
+  <%= link_to "<< Videos Index", videos_url %>
+</footer>

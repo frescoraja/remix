@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Remixapp</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,700' rel='stylesheet' type='text/css'>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  <header>
+    <p class="header"><a href="/">MediaMixer</a></p>
+    <div class="rightside">
+      <div class="searchbar">
+        <%= render '/layouts/search_form' %>
+      </div>
+      <div class="navlinks">
+        <a href="<%= new_video_url %>">Add New Video</a>
+      </div>
+    </div>
+  </header>
+  <hr>
+
+  <%= yield %>
+
+</body>
+</html>

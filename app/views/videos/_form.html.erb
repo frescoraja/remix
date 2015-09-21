@@ -1,0 +1,108 @@
+<% action_url = video.persisted? ? video_url(video) : videos_url %>
+<% http_method = video.persisted? ? "PATCH" : "POST" %>
+<% button_value = video.persisted? ? "Update Video" : "Add Video" %>
+
+<%= form_for video do |f| %>
+  <div>
+    <%= f.text_field :media_url, id: "media_url", placeholder: "Video URL" %>
+    <input type="submit" id="load-video" value="Load Video">
+  </div>
+
+  <div>
+    <%= f.text_field :title, placeholder: "Title" %>
+  </div>
+
+  <div>
+    <%= f.text_area :description, placeholder: "Description" %>
+  </div>
+
+  <div class="tag-input">
+    <% video.tags.each do |tag| %>
+      <p class="created-tag"><%= tag %></p>
+    <% end %>
+    <input class="entry" type="text" placeholder="add tag">
+  </div>
+
+  <div>
+    <input type="hidden" id="video_tags" name="video[tags]" value="<%= video.tags %>">
+  </div>
+  <div><%= f.submit button_value, class: "submit"%></div>
+<% end %>
+
+
+<script type="text/javascript">
+  $(document).ready(function() {
+
+    $(".new_video").submit(function (e) {
+      e.preventDefault();
+      var currentTags = JSON.parse($("#video_tags").val());
+      if (currentTags.length === 0 && $('.entry').val().length > 0) {
+        var newTag = [$(".entry").val()]
+        $("#video_tags").val(JSON.stringify(newTag));
+      }
+      this.submit();
+    });
+
+    $("#load-video").click(function(e) {
+      e.preventDefault();
+      var vid_url = $("#media_url").val();
+      $("#video-container").attr("src", vid_url).attr("controls", true);
+    });
+
+    $('div.tag-input').on('dblclick', 'p.created-tag', function(e) {
+      var newTag = $('.entry').val();
+      if (addTagValue(newTag)) {
+        addTagField($('.entry'), newTag);
+      }
+
+      var tagText = $(this).text();
+      $(this).after($(".entry").val(tagText));
+      $('.entry').focus();
+      $(this).remove();
+      $(this).undelegate();
+      removeTagValue(tagText);
+    });
+
+    $('div.tag-input').on('keydown', 'input.entry', function(e) {
+        if (e.which === 13) {
+          e.preventDefault();
+          var newTag = e.target.value;
+          if (addTagValue(newTag)) {
+            addTagField($(e.target), newTag);
+            $(e.target).remove();
+            $(e.target).undelegate();
+            $('.tag-input').append('<input class="entry" type="text" placeholder="add tag">');
+            $('.entry').focus();
+          }
+        } else if ((e.which === 8 && e.target.value === '') && (!$(this).is(':first-child'))) {
+          e.preventDefault();
+          var tagText = $(this).prev().text();
+          removeTagValue(tagText);
+          $(this).prev().remove();
+          $(this).prev().undelegate();
+        }
+      });
+
+      function addTagField($inputField, newTag) {
+        $inputField.after($('<p>').addClass('created-tag').text(newTag));
+      }
+
+      function addTagValue(tagName) {
+        if (tagName.trim().length > 0) {
+          var currentTags = JSON.parse($("#video_tags").val());
+          if (currentTags.indexOf(tagName) === -1) {
+            currentTags.push(tagName.trim());
+            $("#video_tags").val(JSON.stringify(currentTags));
+            return true;
+          }
+        }
+        return false;
+      }
+
+      function removeTagValue(tagName) {
+        var currentTags = JSON.parse($("#video_tags").val());
+        currentTags.splice(currentTags.indexOf(tagName, 1));
+        $("#video_tags").val(JSON.stringify(currentTags));
+      }
+  });
+</script>

@@ -1,0 +1,23 @@
+<div class="wrapper">
+  <div class="videoList">
+    <% if @search && !@search.empty? %>
+      <h3>Showing results for "<em><%= @search %>"</em>... </h3>
+    <% end %>
+    <%= page_entries_info @videos %>
+    <%= paginate @videos %><br>
+    <% @videos.each do |vid| %>
+      <a href="<%= video_url(vid) %>">
+        <li>
+          <%= video_tag vid.media_url, class: "index-videos" %>
+          <br>
+          <div class="tags">
+            <% vid.tags.each do |tag| %>
+              <span class="tag-item"><i class="fa fa-tags"></i> <%= tag %></span>
+            <% end %>
+          </div>
+        </li>
+      </a>
+    <% end %>
+    <%= paginate @videos %>
+  </div>
+</div>
