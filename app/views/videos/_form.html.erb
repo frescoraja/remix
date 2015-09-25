@@ -59,7 +59,6 @@
       $(this).after($(".entry").val(tagText));
       $('.entry').focus();
       $(this).remove();
-      $(this).undelegate();
       removeTagValue(tagText);
     });
 
@@ -70,7 +69,6 @@
           if (addTagValue(newTag)) {
             addTagField($(e.target), newTag);
             $(e.target).remove();
-            $(e.target).undelegate();
             $('.tag-input').append('<input class="entry" type="text" placeholder="add tag">');
             $('.entry').focus();
           }
@@ -79,7 +77,6 @@
           var tagText = $(this).prev().text();
           removeTagValue(tagText);
           $(this).prev().remove();
-          $(this).prev().undelegate();
         }
       });
 
