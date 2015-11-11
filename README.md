@@ -1,4 +1,3 @@
-== README
 #Try it out live:
 
 [Heroku Live Link](http://mediamixer.herokuapp.com)
