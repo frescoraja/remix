@@ -1,5 +1,5 @@
 class Video < ActiveRecord::Base
-  before_save :tags_array
+  validates :title, :description, :media_url, presence: true
   def self.find_by_query(string)
     results = Video.all
     string.split.each do |word|
@@ -9,8 +9,5 @@ class Video < ActiveRecord::Base
                         .or(videos[:description].matches(query)))
     end
     results
-  end
-
-  def tags_array
   end
 end
